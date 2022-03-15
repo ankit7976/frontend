@@ -9,7 +9,7 @@ const initalState = {
         under15k:[],
         under20k:[],
         under30k:[],
-    }
+    } 
 }
 
  
@@ -18,7 +18,7 @@ export default (state = initalState, action)=>{
       
         case getProductSlugConstant.GET_PRODUCT_BYSLUG_SUCCESS : state = {
             ...state,
-            products: action.payload.product,
+            products: action.payload.products,
             productByPrice:{
                 ...action.payload.productByPrice
             }

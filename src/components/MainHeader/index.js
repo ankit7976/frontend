@@ -130,7 +130,7 @@ const Header = () => {
                         <div class="header-logo">
                             <a href="index.html"><img src="assets/images/logo/logo.png" alt="Site Logo" /><img
                                     class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo"
-                                    style={{display: "none;"}} /></a>
+                                    style={{display: "none"}} /></a>
                         </div>
                     </div>
                    
@@ -194,7 +194,7 @@ const Header = () => {
                             <a href="product-left-sidebar.html" class="cart_pro_title">T-shirt For Women</a>
                             <span class="cart-price"><span>$76.00</span> x 1</span>
                             <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
+                                <input class="qty-input" type="text" name="ec_qtybtn" defaultValue="1" />
                             </div>
                             <a href="javascript:void(0)" class="remove">×</a>
                         </div>
@@ -206,7 +206,7 @@ const Header = () => {
                             <a href="product-left-sidebar.html" class="cart_pro_title">Women Leather Shoes</a>
                             <span class="cart-price"><span>$64.00</span> x 1</span>
                             <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
+                                <input class="qty-input" type="text" name="ec_qtybtn" defaultValue="1" />
                             </div>
                             <a href="javascript:void(0)" class="remove">×</a>
                         </div>
@@ -218,7 +218,7 @@ const Header = () => {
                             <a href="product-left-sidebar.html" class="cart_pro_title">Girls Nylon Purse</a>
                             <span class="cart-price"><span>$59.00</span> x 1</span>
                             <div class="qty-plus-minus">
-                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
+                                <input class="qty-input" type="text" name="ec_qtybtn" defaultValue="1" />
                             </div>
                             <a href="javascript:void(0)" class="remove">×</a>
                         </div>

@@ -22334,3 +22334,15 @@ padding: 0px 10px !important;
 .mega-menu li,.mega-menu li ul{
   padding: 8px 20px;
 }
+
+.ec-product-tab .container{
+  -webkit-box-shadow: 0 0 3px 1px rgb(0 0 0 / 20%);
+  box-shadow: 0 0 3px 1px rgb(0 0 0 / 20%);
+ 
+}
+
+.ec-product-tab .container .section-title{text-align: left; border-bottom: solid 1px #ddd;  padding: 20px 0px;}
+
+.section-title .ec-title{
+  padding: 0px !important;
+}
