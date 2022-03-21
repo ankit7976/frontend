@@ -10,12 +10,12 @@ function App() {
   return (
     <div className="App">
         <Router>
-        <React.Fragment>
+    
             <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route path="/:slug"  element={<ProductListPage />} />
             </Routes>
-            </React.Fragment>
+         
         </Router>
 
 

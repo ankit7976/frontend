@@ -5,30 +5,25 @@ import { getProductBySlug } from '../../actions'
 import Layout from '../../components/Layout'
 import { genratefileName } from '../../urlConfig'
 
-const ProductListPage = (props) => {
+const ProductListPage = () => {
+
+
+  const testarray = ['under 5k','under 10k',
+    'under 15k',
+    'under 20k',
+    'under 30k',
+  ]
+ 
+
   const product = useSelector(state => state.product)
 
   ///alert(JSON.stringify(product.productByPrice))
-  const [priceRange,setPriceRange] = useState({
 
-    under5k:5000,
-    under10k:10000,
-    under15k:15000,
-    under20k:20000,
-    under30k:30000,
- 
-  });
   const { slug } = useParams();
-
-
-
-
   const oldprice = (newprice)=>{
-
     const getvalue = parseInt(newprice) + 5000
     return  getvalue
-   
-     
+  
   }
 
 
@@ -48,13 +43,13 @@ const ProductListPage = (props) => {
       {  Object.keys(product.productByPrice).map((array, index) => {
     
         return (
-          <div className="section ec-product-tab section-space-p" id="collection">
+          <div key={index} className="section ec-product-tab section-space-p">
             <div className="container">
               <div className="row">
                 <div className="col-md-12 text-center">
                   <div className="section-title">
                    
-                    <h2 className="ec-title">{slug }  price range {array}</h2>
+                    <h2 className="ec-title">{index }  price range { testarray[index]}</h2>
                   
                   </div>
                 </div>
@@ -74,7 +69,7 @@ const ProductListPage = (props) => {
                               src={genratefileName(product.productPictures[0].img)} alt="Product" />
                           </a>
                           <span className="percentage">{product.offer}%</span>
-                          <a href="javascript:void(0)" className="quickview" data-link-action="quickview"
+                          <a href="#" className="quickview" data-link-action="quickview"
                             title="Quick view" data-bs-toggle="modal"
                             data-bs-target="#ec_quickview_modal"><img
                               src="assets/images/icons/quickview.svg" className="svg_img pro_svg"
@@ -93,7 +88,7 @@ const ProductListPage = (props) => {
                         </div>
                       </div>
                       <div className="ec-pro-content">
-                        <h5 className="ec-pro-title"><a href="javascript:void(0)">{product.name}</a></h5>
+                        <h5 className="ec-pro-title"><a href="#">{product.name}</a></h5>
                         <div className="ec-pro-rating">
                           <i className="ecicon eci-star fill"></i>
                           <i className="ecicon eci-star fill"></i>
