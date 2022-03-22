@@ -1,15 +1,32 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllCategory } from '../../actions';
+import {Modal,Button} from 'react-bootstrap'
+import { login } from '../../actions';
 
 const Header = () => {
 
+    const [email,setEmail] = useState('');
+    const [password , setPassword] = useState('');
+    const [show, setShow] = useState(false);
+    const auth = useSelector(state=> state.auth)
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+
     const dispatch = useDispatch();
     const category = useSelector(state => state.category)
-    
+   
     useEffect(()=>{
         dispatch(getAllCategory())
+       
     },[])
+
+    const userLogin =()=>{
+        dispatch(login({email,password}))   
+    }
+ 
 
     
   const randerCategories = (categories) => {
@@ -19,7 +36,7 @@ const Header = () => {
       myCategories.push(
         <li key={category._id}>
        
-            {category.parentId ?   <a href={category.slug}> {category.name}</a> : <a>{category.name}</a>}
+            {category.parentId ?   <a href={`${category.slug}?cid=${category._id}&type=${category.type}`}> {category.name}</a> : <a>{category.name}</a>}
 
           {category.children.length > 0 ? (<ul key={category._id}> {randerCategories(category.children)} </ul>) : null}
         </li>
@@ -29,7 +46,36 @@ const Header = () => {
     return myCategories
 
   }
- 
+
+
+  const randerLoggedInUserMenu = ()=>{
+  
+      return (
+        <div className="ec-header-user dropdown">
+        <button className="dropdown-toggle" data-bs-toggle="dropdown">{auth.user.fullName}</button>
+        <ul className="dropdown-menu dropdown-menu-right">
+      
+        <li><a className="dropdown-item" href="checkout.html">profile</a></li>
+            <li><a className="dropdown-item" href="#">Logout</a></li>
+        </ul>
+    </div>
+      )
+  }
+
+  const randerNonLoggedInUserMenu = ()=>{
+    return (
+        <div className="ec-header-user dropdown">
+        <button className="dropdown-toggle" data-bs-toggle="dropdown" onClick={handleShow}>Login</button>
+        <ul className="dropdown-menu dropdown-menu-right">
+        <li><a className="dropdown-item" href="login.html">Login</a></li>
+            <li><a className="dropdown-item" href="register.html">Register</a></li>
+           
+          
+        </ul>
+    </div>
+    )
+}
+
 
   return (
     <header className="ec-header">
@@ -118,7 +164,31 @@ const Header = () => {
         </div>
     </div>
     
+    <Modal className='login-popup' show={show} onHide={handleClose} animation={false}>
+    <Modal.Header closeButton>
+         
+        </Modal.Header>
+        <Modal.Body>
+            
+    <div className='form-group'>
+        <label>User name</label>
+        <input type="text" className='form-control' onChange={(e)=> setEmail(e.target.value)} />
+    </div>
 
+    <div className='form-group'>
+        <label>Password</label>
+        <input type="text" className='form-control'  onChange={(e)=> setPassword(e.target.value)} />
+    </div>
+
+    <div className='form-group'>
+     
+        <input type="Button" className='btn btn-primary' value="Login" onClick={userLogin}/>
+    </div>
+
+
+        </Modal.Body>
+      
+      </Modal>
 
 
         <div className="ec-header-bottom d-none d-lg-block">
@@ -148,15 +218,7 @@ const Header = () => {
                         <div className="ec-header-bottons">
 
                             
-                            <div className="ec-header-user dropdown">
-                                <button className="dropdown-toggle" data-bs-toggle="dropdown"><img
-                                        src="assets/images/icons/user.svg" className="svg_img header_svg" alt="" /></button>
-                                <ul className="dropdown-menu dropdown-menu-right">
-                                    <li><a className="dropdown-item" href="register.html">Register</a></li>
-                                    <li><a className="dropdown-item" href="checkout.html">Checkout</a></li>
-                                    <li><a className="dropdown-item" href="login.html">Login</a></li>
-                                </ul>
-                            </div>
+                        {auth.authenticate ? randerLoggedInUserMenu():randerNonLoggedInUserMenu()}
                             
                             <a href="wishlist.html" className="ec-header-btn ec-header-wishlist">
                                 <div className="header-icon"><img src="assets/images/icons/wishlist.svg"

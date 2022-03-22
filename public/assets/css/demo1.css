@@ -22346,3 +22346,26 @@ padding: 0px 10px !important;
 .section-title .ec-title{
   padding: 0px !important;
 }
+
+ 
+
+.type-page-products a{
+ display: inline-flex;
+  margin: 25px 10px !important;
+}
+
+.login-popup .form-group{
+  margin-bottom: 20px;
+}
+
+.login-popup label{
+  margin-bottom: 0px;
+}
+
+
+.login-popup .modal-header{
+  position: absolute;
+    right: -53px;
+    color: #fff;
+    border: none;
+}

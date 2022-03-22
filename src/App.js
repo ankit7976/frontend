@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {BrowserRouter as Router , Route,Routes} from 'react-router-dom'
+import { isUserLoggedIn } from "./actions";
 import Header from "./components/MainHeader";
 import Home from "./containers/HomePage";
 import ProductListPage from "./containers/ProductListPage";
@@ -7,6 +9,15 @@ import ProductListPage from "./containers/ProductListPage";
 
 
 function App() {
+
+const auth = useSelector(state => state.auth)
+const dispatch = useDispatch();
+useEffect(()=>{
+  if(!auth.authenticate){
+    dispatch(isUserLoggedIn())
+  }
+})
+
   return (
     <div className="App">
         <Router>
