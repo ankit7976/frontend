@@ -1,8 +1,9 @@
 import React, { useEffect,useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllCategory } from '../../actions';
+import { getAllCategory, signout } from '../../actions';
 import {Modal,Button} from 'react-bootstrap'
 import { login } from '../../actions';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
 
@@ -26,6 +27,9 @@ const Header = () => {
     const userLogin =()=>{
         dispatch(login({email,password}))   
     }
+    const Logout = ()=>{
+        dispatch(signout())
+    }
  
 
     
@@ -36,7 +40,7 @@ const Header = () => {
       myCategories.push(
         <li key={category._id}>
        
-            {category.parentId ?   <a href={`${category.slug}?cid=${category._id}&type=${category.type}`}> {category.name}</a> : <a>{category.name}</a>}
+            {category.parentId ? <Link to={`/${category.slug}?cid=${category._id}&type=${category.type}`}> {category.name}</Link> : <a>{category.name}</a>}
 
           {category.children.length > 0 ? (<ul key={category._id}> {randerCategories(category.children)} </ul>) : null}
         </li>
@@ -56,7 +60,7 @@ const Header = () => {
         <ul className="dropdown-menu dropdown-menu-right">
       
         <li><a className="dropdown-item" href="checkout.html">profile</a></li>
-            <li><a className="dropdown-item" href="#">Logout</a></li>
+            <li><span className="dropdown-item" onClick={Logout}>Logout</span></li>
         </ul>
     </div>
       )

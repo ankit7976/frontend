@@ -28,8 +28,8 @@ const ProductPage = () => {
 
 
         <>
-        <div className='container'>
-            <h3 style={{margin:'40px 0px',fontWeight:'bold'}}>{page.title}</h3>
+            <div className='container'>
+                <h3 style={{ margin: '40px 0px', fontWeight: 'bold' }}>{page.title}</h3>
             </div>
             <Carousel
                 renderThumbs={() => { }}
@@ -44,17 +44,20 @@ const ProductPage = () => {
                 )}
 
             </Carousel>
-<div className='container'>
-            <div className='type-page-products'>
-                {page.products && page.products.map((product, index) =>
+            <div className='container'>
+                <div className='type-page-products'>
+                    {page.products && page.products.map((product, index) =>
 
-                    <a kry={index} href={product.navigateTo}>
-                        <img src={product.img} />
-                    </a>
-                )}
+                        <a kry={index} href={product.navigateTo}>
+                            <img src={product.img} />
+                        </a>
+                    )}
 
+                </div>
             </div>
-            </div>
+
+
+          
 
         </>
     )

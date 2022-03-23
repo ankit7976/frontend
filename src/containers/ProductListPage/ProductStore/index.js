@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { getProductBySlug } from '../../../actions'
 import { genratefileName } from '../../../urlConfig'
 
@@ -72,7 +72,7 @@ const ProductStore = (props) => {
                     </div>
                   </div>
                   <div className="ec-pro-content">
-                    <h5 className="ec-pro-title"><a href="#">{product.name}</a></h5>
+                    <h5 className="ec-pro-title"><Link to={`/${product.slug}/${product._id}/p`}>{product.name}</Link></h5>
                     <div className="ec-pro-rating">
                       <i className="ecicon eci-star fill"></i>
                       <i className="ecicon eci-star fill"></i>

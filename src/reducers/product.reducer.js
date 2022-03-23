@@ -13,10 +13,13 @@ const initalState = {
     pageRequest:false,
     page:{},
     error:null,
+    productDetails:{},
+    loading:false
 }
 
  
 export default (state = initalState, action)=>{
+     console.log(action)
     switch(action.type){
       
         case getProductSlugConstant.GET_PRODUCT_BYSLUG_SUCCESS : state = {
@@ -45,6 +48,29 @@ export default (state = initalState, action)=>{
         case getProductSlugConstant.GET_PRODUCT_PAGE_FAILURE : state = {
             ...state,
            pageRequest:false ,
+           error:action.payload.error
+           
+        }
+        break;
+
+
+        case getProductSlugConstant.GET_PRODUCT_DETAILS_BY_ID_REQUEST : state = {
+            ...state,
+            loading:true
+        }
+        break;
+        
+        case getProductSlugConstant.GET_PRODUCT_DETAILS_BY_ID_SUCCESS : state = {
+ 
+            ...state,
+            productDetails:action.payload.productDetails,
+           loading:false
+        }
+        break;
+        
+        case getProductSlugConstant.GET_PRODUCT_DETAILS_BY_ID_FAILURE : state = {
+            ...state,
+           loading:false,
            error:action.payload.error
            
         }

@@ -4,6 +4,7 @@ import {BrowserRouter as Router , Route,Routes} from 'react-router-dom'
 import { isUserLoggedIn } from "./actions";
 import Header from "./components/MainHeader";
 import Home from "./containers/HomePage";
+import ProductDetailsPage from "./containers/ProductDetailsPage";
 import ProductListPage from "./containers/ProductListPage";
 
 
@@ -25,6 +26,7 @@ useEffect(()=>{
             <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route path="/:slug"  element={<ProductListPage />} />
+                <Route path="/:productslug/:productId/p" element={<ProductDetailsPage />} />
             </Routes>
          
         </Router>
