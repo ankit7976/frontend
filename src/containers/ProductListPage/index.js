@@ -27,9 +27,9 @@ const ProductListPage = (props) => {
 
 
   return (
-    <Layout>
+    <>
       {RanderProduct()}
-    </Layout >
+    </ >
   )
 }
 

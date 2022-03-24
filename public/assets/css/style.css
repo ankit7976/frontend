@@ -33557,3 +33557,17 @@ input[type=email]:focus::-webkit-input-placeholder {
 /*# sourceMappingURL=style.css.map */
 
  
+.single-product-cover .single-slide {
+  display: none;
+}
+
+.single-product-cover .single-slide:first-child{
+  display: block;
+}
+
+.single-nav-thumb .single-slide{
+  height: 50px;
+  
+}
+.single-nav-thumb .single-slide img{ width: 100%;}
+.single-nav-thumb{display: flex;}

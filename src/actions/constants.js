@@ -39,3 +39,11 @@ export const userConstants = {
     USER_REGISTER_FAILURE:"USER_REGISTER_FAILURE",
     
 }
+
+export const cartConstants = {
+   ADD_TO_CART:"ADD_TO_CART",
+ 
+    
+}
+
+
