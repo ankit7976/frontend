@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAddress } from '../../actions/user.action';
+import { addAddress, getAddress } from '../../actions/user.action';
 
 
 const CheckoutStape = (props) => {
@@ -20,6 +20,39 @@ const CheckoutStape = (props) => {
 
 
 const CheckOut = () => {
+
+    const [name, setNmae] = useState('');
+    const [mobileNumber, setmobileNumber] = useState('');
+    const [pinCode, setPincode] = useState('');
+    const [locality, setlocality] = useState('');
+    const [address, setAddress] = useState('');
+    const [cityDistrictTown, setcityDistrictTown] = useState('');
+    const [state, setState] = useState('');
+    const [landmark, setlandmark] = useState('');
+    const [alternatePhone, setalternatePhone] = useState('');
+    const [addressType, setaddressType] = useState('');
+
+    const onAddressSubmit = (e)=>{
+
+        const payload = {
+            address:{
+                name,
+                mobileNumber,
+                pinCode,
+                cityDistrictTown,
+                state,
+                landmark,
+                alternatePhone,
+                addressType,
+                address
+
+            }
+        }
+
+        console.log(payload);
+        dispatch(addAddress(payload))
+
+    }
 
 
     const user = useSelector(state => state.user);
@@ -64,121 +97,106 @@ const CheckOut = () => {
                                     active={true}
                                     body={
                                         <div>
-                                            { 
+                                            {
                                                 user.address.map(adr =>
                                                     <div className='addresContainer flexrowitem'>
-                                                    
-                                                          
-                                                      
-                                                        <div className='addressInfo'>
-                                                       
-                                                        <span class="ec-bill-option">
-                                                            <span><input type="radio" id="bill1" name="radio-item" /><label for="bill1">check</label></span>
-                                                      </span>
-                                                                    <span>{adr.name}</span>
-                                                                    <span>{adr.addressType}</span>
-                                                                    <span>{adr.mobileNumber}</span>
-                                                             
-                                                                <div>
-                                                                    {adr.address}
-                                                                </div>
-                                                                <button className="btn btn-warning">DELEVERY HERE</button>
 
-                                                         
+
+
+                                                        <div className='addressInfo'>
+
+                                                            <span class="ec-bill-option">
+                                                                <span><input type="radio" id="bill1" name="radio-item" /><label for="bill1">check</label></span>
+                                                            </span>
+                                                            <span>{adr.name}</span>
+                                                            <span>{adr.addressType}</span>
+                                                            <span>{adr.mobileNumber}</span>
+
+                                                            <div>
+                                                                {adr.address}
+                                                            </div>
+                                                            <button className="btn btn-warning">DELEVERY HERE</button>
+
+
                                                         </div>
                                                     </div>
                                                 )
-                                            }  
+                                            }
                                         </div>
                                     } />
 
                                 <div className="ec-checkout-wrap margin-bottom-30 padding-bottom-3">
                                     <div className="ec-checkout-block ec-check-bill">
-                                        <h3 className="ec-checkout-title">Billing Details</h3>
+                                        <h3 className="ec-checkout-title">Add New Address</h3>
                                         <div className="ec-bl-block-content">
                                             <div className="ec-check-subtitle">Checkout Options</div>
-                                            <span className="ec-bill-option">
-                                                <span>
-                                                    <input type="radio" id="bill1" name="radio-group" />
-                                                    <label for="bill1">I want to use an existing address</label>
-                                                </span>
-                                                <span>
-                                                    <input type="radio" id="bill2" name="radio-group" checked />
-                                                    <label for="bill2">I want to use new address</label>
-                                                </span>
-                                            </span>
-                                            <div className="ec-check-bill-form">
-                                                <form action="#" method="post">
+                                            
+                                            <div className="ec-check-bill-form" style={{display:'flex', flexFlow: 'row wrap'}}>
+                                              
                                                     <span className="ec-bill-wrap ec-bill-half">
-                                                        <label>First Name*</label>
-                                                        <input type="text" name="firstname"
-                                                            placeholder="Enter your first name" required />
+                                                        <label>Name*</label>
+                                                        <input type="text" name="name" value={name} onChange={(e) => setNmae(e.target.value)}
+                                                            placeholder="Name your first name" required />
                                                     </span>
                                                     <span className="ec-bill-wrap ec-bill-half">
-                                                        <label>Last Name*</label>
-                                                        <input type="text" name="lastname"
-                                                            placeholder="Enter your last name" required />
+                                                        <label>Mobile Number*</label>
+
+                                                        <input type="text" name="mobileNumber" value={mobileNumber} onChange={(e) => setmobileNumber(e.target.value)}
+                                                            placeholder="Enter your mobile number" required />
+                                                    </span>
+                                                    <span className="ec-bill-wrap ec-bill-half">
+                                                        <label>Pincode</label>
+                                                        <input type="text" name="pinCode" placeholder="pinCode Line 1" value={pinCode} onChange={(e) => setPincode(e.target.value)} />
+                                                    </span>
+                                                    <span className="ec-bill-wrap ec-bill-half">
+                                                        <label>locality</label>
+                                                        <input type="text" name="locality" placeholder="Locality Line 1" value={locality} onChange={(e) => setlocality(e.target.value)} />
                                                     </span>
                                                     <span className="ec-bill-wrap">
+                                                        <label>Full Address</label>
+                                                        <input type="text" name="address" placeholder="Locality Line 1" value={address} onChange={(e) => setAddress(e.target.value)} />
+                                                    </span>
+
+                                                    
+                                                    <span className="ec-bill-wrap ec-bill-half">
+                                                        <label>address</label>
+                                                        <input type="text" name="cityDistrictTown" placeholder="cityDistrict Town Line 1" value={cityDistrictTown} onChange={(e) => setcityDistrictTown(e.target.value)} />
+                                                    </span>
+                                                    <span className="ec-bill-wrap ec-bill-half">
                                                         <label>Address</label>
-                                                        <input type="text" name="address" placeholder="Address Line 1" />
+                                                        <input type="text" name="state" placeholder="State Line 1" value={state} onChange={(e) => setState(e.target.value)} />
                                                     </span>
                                                     <span className="ec-bill-wrap ec-bill-half">
-                                                        <label>City *</label>
-                                                        <span className="ec-bl-select-inner">
-                                                            <select name="ec_select_city" id="ec-select-city"
-                                                                className="ec-bill-select">
-                                                                <option selected disabled>City</option>
-                                                                <option value="1">City 1</option>
-                                                                <option value="2">City 2</option>
-                                                                <option value="3">City 3</option>
-                                                                <option value="4">City 4</option>
-                                                                <option value="5">City 5</option>
-                                                            </select>
-                                                        </span>
+                                                        <label>Address</label>
+                                                        <input type="text" name="landmark" placeholder="Landmark Line 1" value={landmark} onChange={(e) => setlandmark(e.target.value)} />
                                                     </span>
                                                     <span className="ec-bill-wrap ec-bill-half">
-                                                        <label>Post Code</label>
-                                                        <input type="text" name="postalcode" placeholder="Post Code" />
+                                                        <label>Address</label>
+                                                        <input type="text" name="alternatePhone" placeholder="Alternate Phone Line 1" value={alternatePhone} onChange={(e) => setalternatePhone(e.target.value)} />
                                                     </span>
-                                                    <span className="ec-bill-wrap ec-bill-half">
-                                                        <label>Country *</label>
-                                                        <span className="ec-bl-select-inner">
-                                                            <select name="ec_select_country" id="ec-select-country"
-                                                                className="ec-bill-select">
-                                                                <option selected disabled>Country</option>
-                                                                <option value="1">Country 1</option>
-                                                                <option value="2">Country 2</option>
-                                                                <option value="3">Country 3</option>
-                                                                <option value="4">Country 4</option>
-                                                                <option value="5">Country 5</option>
-                                                            </select>
-                                                        </span>
+                                                    <span className="ec-bill-option">
+                                                <span onClick={()=> setaddressType('home')}>
+                                                    <input type="radio" id="bill1" name="radio-group"  />
+                                                    <label for="bill1">Home</label>
+                                                </span>
+                                                <span onClick={()=> setaddressType('work')}>
+                                                    <input type="radio" id="bill2" name="radio-group"  checked />
+                                                    <label for="bill2">Work</label>
+                                                </span>
+                                            </span>
+
+                                                    <span className="ec-check-order-btn" style={{display:'block'}}>
+                                                        <button className="btn btn-primary" onClick={onAddressSubmit}>Submit</button>
                                                     </span>
-                                                    <span className="ec-bill-wrap ec-bill-half">
-                                                        <label>Region State</label>
-                                                        <span className="ec-bl-select-inner">
-                                                            <select name="ec_select_state" id="ec-select-state"
-                                                                className="ec-bill-select">
-                                                                <option selected disabled>Region/State</option>
-                                                                <option value="1">Region/State 1</option>
-                                                                <option value="2">Region/State 2</option>
-                                                                <option value="3">Region/State 3</option>
-                                                                <option value="4">Region/State 4</option>
-                                                                <option value="5">Region/State 5</option>
-                                                            </select>
-                                                        </span>
-                                                    </span>
-                                                </form>
+
+                                               
                                             </div>
 
                                         </div>
                                     </div>
 
                                 </div>
-                                <span className="ec-check-order-btn">
-                                    <a className="btn btn-primary" href="#">Place Order</a>
-                                </span>
+
                             </div>
                         </div>
 
