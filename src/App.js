@@ -6,6 +6,7 @@ import { updateCart } from "./actions/cart.action";
 import Layout from "./components/Layout";
 import Header from "./components/MainHeader";
 import CartPage from "./containers/cartPage";
+import CheckOut from "./containers/checkout";
 import Home from "./containers/HomePage";
 import ProductDetailsPage from "./containers/ProductDetailsPage";
 import ProductListPage from "./containers/ProductListPage";
@@ -22,8 +23,9 @@ useEffect(()=>{
   }
 },[auth.authenticate]);
 useEffect(()=>{
+  console.log('update Cart app js')
   dispatch(updateCart())
-},[])
+},[auth.authenticate])
 
   return (
     <div className="App">
@@ -32,6 +34,7 @@ useEffect(()=>{
             <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route path="/cart"  element={<CartPage />} />
+                <Route path="/checkout"  element={<CheckOut />} />
                 <Route path="/:slug"  element={<ProductListPage />} />
                 <Route path="/:productslug/:productId/p" element={<ProductDetailsPage />} />
             </Routes>

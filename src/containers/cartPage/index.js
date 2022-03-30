@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '../../actions/cart.action';
+import { addToCart, getCartItem } from '../../actions/cart.action';
 import CartItem from './cartItem';
 
 const CartPage = () => {
-
+const auth = useSelector(state=> state.auth)
   const cart = useSelector(state => state.cart)
  const dispatch = useDispatch()
  const [cartItems,seCartItem] = useState(cart.cartItems)
  
  useEffect(()=>{
     seCartItem(cart.cartItems)
+
+
  },[cart.cartItems])
+
+ console.log('all cart items =>', cart.cartItem)
+
+ useEffect(()=>{
+if(auth.authenticate){
+    dispatch(getCartItem())
+}
+ },[auth.authenticate])
 
     const QtyIncrement = (_id,qty)=>{
         console.log({_id,qty})
@@ -22,9 +32,7 @@ const CartPage = () => {
         const {name,img,price} = cartItems[_id]
         dispatch(addToCart({_id,name,img,price},-1))      
     }
-
     return (
-
             <section className="ec-page-content section-space-p">
                 <div className="container">
                     <div className="row">
@@ -57,9 +65,6 @@ const CartPage = () => {
                                                              />
                                                            
                                                         ))}
-
-
-
                                                     </tbody>
                                                 </table>
                                             </div>

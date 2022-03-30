@@ -22369,3 +22369,49 @@ padding: 0px 10px !important;
     color: #fff;
     border: none;
 }
+
+.checkoutHeader.active{
+  background: #44b936;}
+
+.checkoutHeader{
+  background: #ddd;
+  color: #fff;
+  padding: 15px;
+}
+
+.stapNumber{
+border-radius:20px ;
+  min-width: 25px;
+  text-align: center;
+  background: #fff;
+  margin-right: 20px;
+  display: inline-block;
+  color: #000;
+  font-weight: bold;
+}
+
+
+.stapTitle{
+  font-size: 20px;
+  font-weight: 600;
+ 
+ 
+  position: relative;
+  display: inline-block;
+  color: #fff;
+  font-family: "Montserrat";
+  line-height: 1;
+}
+
+
+.addresContainer.flexrowitem{
+  display: flex;
+margin-bottom: 40px;
+border-bottom: solid 1px #ddd;
+padding-bottom: 20px;
+margin-bottom: 50px;
+}
+
+
+ 
+ 
