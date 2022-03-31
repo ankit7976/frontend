@@ -1,89 +1,101 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom';
 import { addToCart, getCartItem } from '../../actions/cart.action';
+import PriceDetails from '../../components/PriceDetails';
 import CartItem from './cartItem';
 
 const CartPage = () => {
-const auth = useSelector(state=> state.auth)
-  const cart = useSelector(state => state.cart)
- const dispatch = useDispatch()
- const [cartItems,seCartItem] = useState(cart.cartItems)
- 
- useEffect(()=>{
-    seCartItem(cart.cartItems)
+    const auth = useSelector(state => state.auth)
+    const cart = useSelector(state => state.cart)
+    const dispatch = useDispatch()
+    const [cartItems, seCartItem] = useState(cart.cartItems)
+
+    useEffect(() => {
+        seCartItem(cart.cartItems)
 
 
- },[cart.cartItems])
+    }, [cart.cartItems])
 
- console.log('all cart items =>', cart.cartItem)
+    console.log('all cart items =>', cart.cartItem)
 
- useEffect(()=>{
-if(auth.authenticate){
-    dispatch(getCartItem())
-}
- },[auth.authenticate])
+    useEffect(() => {
+        if (auth.authenticate) {
+            dispatch(getCartItem())
+        }
+    }, [auth.authenticate])
 
-    const QtyIncrement = (_id,qty)=>{
-        console.log({_id,qty})
-        const {name,img,price} = cartItems[_id]
-        dispatch(addToCart({_id,name,img,price},1)) 
+    const QtyIncrement = (_id, qty) => {
+        console.log({ _id, qty })
+        const { name, img, price } = cartItems[_id]
+        dispatch(addToCart({ _id, name, img, price }, 1))
     }
-    const QtyDescrement = (_id,qty)=>{
-        const {name,img,price} = cartItems[_id]
-        dispatch(addToCart({_id,name,img,price},-1))      
+    const QtyDescrement = (_id, qty) => {
+        const { name, img, price } = cartItems[_id]
+        dispatch(addToCart({ _id, name, img, price }, -1))
     }
     return (
-            <section className="ec-page-content section-space-p">
-                <div className="container">
-                    <div className="row">
-                        <div className="ec-cart-leftside col-lg-12 col-md-12 ">
+        <section className="ec-page-content section-space-p">
+            <div className="container">
+                <div className="row">
+                    <div className="ec-cart-leftside col-lg-12 col-md-12 ">
 
-                            <div className="ec-cart-content">
-                                <div className="ec-cart-inner">
-                                    <div className="row">
-                                        <form action="#">
-                                            <div className="table-content cart-table-content">
-                                                <table>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Product</th>
-                                                            <th>Price</th>
-                                                            <th style={{ textAlign: "center" }}>Quantity</th>
-                                                            <th>Total</th>
-                                                            <th></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {Object.keys(cartItems).map((key, index) => (
-                                                        
-                                                       
-                                                             <CartItem 
-                                                             key={index}
-                                                             cartItem={cartItems[key]}
-                                                             QtyIncrement={QtyIncrement}
-                                                             QtyDescrement={QtyDescrement}
-                                                             />
-                                                           
-                                                        ))}
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div className="row">
-                                                <div className="col-lg-12">
-                                                    <div className="ec-cart-update-bottom">
-                                                        <a href="#">Continue Shopping</a>
-                                                        <button className="btn btn-primary">Check Out</button>
-                                                    </div>
+                        <div className="ec-cart-content">
+                            <div className="ec-cart-inner">
+                                <div className="row">
+                                    <form action="#">
+                                        <div className="table-content cart-table-content">
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Price</th>
+                                                        <th style={{ textAlign: "center" }}>Quantity</th>
+                                                        <th>Total</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {Object.keys(cartItems).map((key, index) => (
+
+
+                                                        <CartItem
+                                                            key={index}
+                                                            cartItem={cartItems[key]}
+                                                            QtyIncrement={QtyIncrement}
+                                                            QtyDescrement={QtyDescrement}
+                                                        />
+
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-lg-12">
+                                                <div className="ec-cart-update-bottom">
+                                                    <a href="#">Continue Shopping</a>
+                                                    <NavLink className="btn btn-primary" to={'/checkout'}>Check Out</NavLink>
                                                 </div>
                                             </div>
-                                        </form>
-                                    </div>
+                                        </div>
+
+                                        <PriceDetails
+
+                                            totalPrice={Object.keys(cart.cartItems).reduce(function (totalPrice, key) {
+                                                const { price, qty } = cart.cartItems[key];
+                                                return totalPrice + price * qty;
+                                            }, 0)}
+
+                                        />
+
+                                    </form>
                                 </div>
                             </div>
-
                         </div>
 
-                        {/* <div className="ec-cart-rightside col-lg-4 col-md-12">
+                    </div>
+
+                    {/* <div className="ec-cart-rightside col-lg-4 col-md-12">
                     <div className="ec-sidebar-wrap">
                       
                         <div className="ec-sidebar-block">
@@ -168,10 +180,10 @@ if(auth.authenticate){
                     
                     </div>
                 </div> */}
-                    </div>
                 </div>
-            </section>
-     
+            </div>
+        </section>
+
     )
 }
 
