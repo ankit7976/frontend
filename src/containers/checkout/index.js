@@ -47,10 +47,17 @@ const CheckOut = () => {
         const updatedAddress = address.map(adr => adr._id === addr._id ? { ...adr, selected: true } : { ...adr, selected: false })
         setAddress(updatedAddress);
     }
+
+    const enableAddressEditForm = (addr)=>{
+        const updatedAddress = address.map((adr => adr._id === addr._id ? {...adr,edit:true} : {...adr,edit:false}))
+        setAddress(updatedAddress);
+    }
     const confirmDeleveryAddress = (addr) => {
         setSelectedAddress(addr);
         setConfirmAddress(true);
     }
+
+
 
     return (
         <section className="ec-page-content section-space-p checkout_page">
@@ -126,23 +133,28 @@ const CheckOut = () => {
 
                                             {
                                                 confirmAddress ? <div className=""><span>{selectedAddress.address}</span><span>{selectedAddress.pinCode}</span></div>
-                                                    : address.map(addr =>
-                                                        <div key={addr._id} className='ec-checkout-wrap'>
+                                                    : address.map(adr =>
+                                                        <div key={adr._id} className='ec-checkout-wrap'>
                                                             <div className='addresContainer flexrowitem'>
                                                                 <div className='addressInfo'>
 
-                                                                    <input type='radio' onClick={() => selectAddress(addr)} name="address" />
-                                                                    <span>{addr.name}</span>
-                                                                    <span>{addr.addressType}</span>
-                                                                    <span>{addr.mobileNumber}</span>
+                                                                    <input type='radio' onClick={() => selectAddress(adr)} name="address" />
 
-                                                                    <div>
-                                                                        {addr.address}
-                                                                    </div>
+                                                                    {!adr.edit ? (
+                                                                        <>
+                                                                            <span>{adr.name}</span>
+                                                                            <span>{adr.addressType}</span>
+                                                                            <span>{adr.mobileNumber}</span>
 
-                                                                    {addr.selected && <button onClick={() => confirmDeleveryAddress(addr)} className="btn btn-warning">DELEVERY HERE</button>}
+                                                                            <div>
+                                                                                {adr.address}
+                                                                            </div>
 
-                                                                    {addr.selected && <button className="btn btn-primary">edit</button>}
+                                                                            {adr.selected && <button onClick={() => confirmDeleveryAddress(adr)} className="btn btn-warning">DELEVERY HERE</button>}
+
+                                                                            {adr.selected && <button className="btn btn-primary" onClick={()=> enableAddressEditForm(adr)}>edit</button>}</>
+                                                                    ): (<div className='edit_form'>EDIT FORM</div>)}
+
 
 
 
@@ -178,38 +190,38 @@ const CheckOut = () => {
                                     <h3 class="ec-sidebar-title">Summary<div class="ec-sidebar-res"><i class="ecicon eci-angle-down"></i></div></h3>
                                 </div>
                                 <div className='ec-sb-block-content ec-sidebar-dropdown'>
-                                <div class="ec-checkout-summary">
-                                    <div>
-                                        <span class="text-left">Sub-Total</span>
-                                        <span class="text-right">$80.00</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-left">Delivery Charges</span>
-                                        <span class="text-right">$80.00</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-left">Coupan Discount</span>
-                                        <span class="text-right"><a class="ec-checkout-coupan">Apply Coupan</a></span>
-                                    </div>
-                                    <div class="ec-checkout-coupan-content">
-                                        <form class="ec-checkout-coupan-form" name="ec-checkout-coupan-form" method="post" action="#">
-                                            <input class="ec-coupan" type="text" required="" placeholder="Enter Your Coupan Code" name="ec-coupan" value="" />
-                                            <button class="ec-coupan-btn button btn-primary" type="submit" name="subscribe" value="">Apply</button>
-                                        </form>
-                                    </div>
-                                    <div class="ec-checkout-summary-total">
-                                        <span class="text-left">Total Amount</span>
-                                        <span class="text-right">
-                                            
-                                        ₹   {Object.keys(cart.cartItems).reduce(function (totalPrice, key) {
-                                                const { price, qty } = cart.cartItems[key];
-                                                return totalPrice + price * qty;
-                                            }, 0)}
+                                    <div class="ec-checkout-summary">
+                                        <div>
+                                            <span class="text-left">Sub-Total</span>
+                                            <span class="text-right">$80.00</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-left">Delivery Charges</span>
+                                            <span class="text-right">$80.00</span>
+                                        </div>
+                                        <div>
+                                            <span class="text-left">Coupan Discount</span>
+                                            <span class="text-right"><a class="ec-checkout-coupan">Apply Coupan</a></span>
+                                        </div>
+                                        <div class="ec-checkout-coupan-content">
+                                            <form class="ec-checkout-coupan-form" name="ec-checkout-coupan-form" method="post" action="#">
+                                                <input class="ec-coupan" type="text" required="" placeholder="Enter Your Coupan Code" name="ec-coupan" value="" />
+                                                <button class="ec-coupan-btn button btn-primary" type="submit" name="subscribe" value="">Apply</button>
+                                            </form>
+                                        </div>
+                                        <div class="ec-checkout-summary-total">
+                                            <span class="text-left">Total Amount</span>
+                                            <span class="text-right">
+
+                                                ₹   {Object.keys(cart.cartItems).reduce(function (totalPrice, key) {
+                                                    const { price, qty } = cart.cartItems[key];
+                                                    return totalPrice + price * qty;
+                                                }, 0)}
                                             </span>
-                                       
-                                       
+
+
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
                             </div>
 
