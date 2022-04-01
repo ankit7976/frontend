@@ -5,7 +5,7 @@ import { addToCart, getCartItem } from '../../actions/cart.action';
 import PriceDetails from '../../components/PriceDetails';
 import CartItem from './cartItem';
 
-const CartPage = () => {
+const CartPage = (props) => {
     const auth = useSelector(state => state.auth)
     const cart = useSelector(state => state.cart)
     const dispatch = useDispatch()
@@ -34,6 +34,66 @@ const CartPage = () => {
         const { name, img, price } = cartItems[_id]
         dispatch(addToCart({ _id, name, img, price }, -1))
     }
+
+
+if(props.cartItemsOnly) {
+    return (
+    
+
+<section className="ec-page-content ">
+<div className="container">
+    <div className="row">
+        <div className="ec-cart-leftside col-lg-12 col-md-12" style={{padding:'0px'}}>
+
+            <div className="ec-cart-content">
+                <div className="ec-cart-inner">
+                    <div className="row">
+                        <form action="#">
+                            <div className="table-content cart-table-content">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th style={{ textAlign: "center" }}>Quantity</th>
+                                            <th>Total</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {Object.keys(cartItems).map((key, index) => (
+
+
+                                            <CartItem
+                                                key={index}
+                                                cartItem={cartItems[key]}
+                                                QtyIncrement={QtyIncrement}
+                                                QtyDescrement={QtyDescrement}
+                                            />
+
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+      
+    </div>
+</div>
+</section>
+
+
+
+    )
+}
+
     return (
         <section className="ec-page-content section-space-p">
             <div className="container">
@@ -79,14 +139,7 @@ const CartPage = () => {
                                             </div>
                                         </div>
 
-                                        <PriceDetails
-
-                                            totalPrice={Object.keys(cart.cartItems).reduce(function (totalPrice, key) {
-                                                const { price, qty } = cart.cartItems[key];
-                                                return totalPrice + price * qty;
-                                            }, 0)}
-
-                                        />
+                                  
 
                                     </form>
                                 </div>
