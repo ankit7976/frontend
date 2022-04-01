@@ -36,6 +36,8 @@ const CartPage = (props) => {
     }
 
 
+    
+
 if(props.cartItemsOnly) {
     return (
     
