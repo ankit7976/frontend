@@ -107,6 +107,28 @@ export const updateCart = () => {
 }
 
 
+export const removeCartItem = (payload) => {
+    return async (dispatch) => {
+        try {
+            dispatch({type:cartConstants.REMOVE_CART_ITEM_REQUEST})
+            const res = await axios.post('/user/cart/removeItem',{payload})
+
+            if (res.status === 202) {
+                dispatch({type:cartConstants.REMOVE_CART_ITEM_SUCCESS})
+                dispatch(getCartItem());
+            }else{
+                const {error} = res.data;
+                dispatch({type:cartConstants.REMOVE_CART_ITEM_SUCCESS,
+                payload:{error}
+                })
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
+
 export {
     getCartItem
 }

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom';
 
 import { getCartItem } from '../../actions/cart.action';
-import { addAddress, getAddress } from '../../actions/user.action';
+import { addAddress, addOrder, getAddress } from '../../actions/user.action';
 import CartPage from '../cartPage';
 import AddressForm from './addAddress';
 
@@ -37,17 +38,17 @@ const Address = ({
             </div>
             <div className="flexRow sb addressinfo">
                 {!adr.edit ? (
-                    <div style={{ width: "100%" }}>
-                        <div className="addressDetail">
-                            <div>
+                    <div className='addressDetail col-sm-12'>
+                        <div className="addressDetail-text">
+                        
                                 <span className="addressName">{adr.name}</span>
                                 <span className="addressType">{adr.addressType}</span>
                                 <span className="addressMobileNumber">{adr.mobileNumber}</span>
-                            </div>
+                      
 
                         </div>
                         <div className="fullAddress">
-                            {adr.address} <br /> {`${adr.state} - ${adr.pinCode}`}
+                            {adr.address}  {`${adr.state} - ${adr.pinCode}`}
                         </div>
 
                         {adr.selected && (
@@ -86,7 +87,11 @@ const CheckOut = () => {
     const [address, setAddress] = useState([])
     const [confirmAddress, setConfirmAddress] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
-    const [orderSummary, setOrderSummary] = useState(false)
+    const [orderSummary, setOrderSummary] = useState(false);
+    const [orderConformation, SetOrderConformation] = useState(false);
+    const [paymentOption, setPaymentOption] = useState(false)
+    const [orderConform, setOrderConform] = useState(false);
+
 
     const onAddressSubmit = (addr) => {
         setSelectedAddress(addr);
@@ -112,6 +117,33 @@ const CheckOut = () => {
         setAddress(updatedAddress);
     };
 
+    const userorderConformation = () => {
+        SetOrderConformation(true)
+        setOrderSummary(false);
+        setPaymentOption(true)
+    }
+
+
+    const onConformOrder = () => {
+        const totalAmount = Object.keys(cart.cartItems).reduce(function (totalPrice, key) { const { price, qty } = cart.cartItems[key]; return totalPrice + price * qty; }, 0)
+        const items = Object.keys(cart.cartItems).map(key => ({
+            productId: key,
+            payablePrice: cart.cartItems[key].price,
+            purchasedQty: cart.cartItems[key].qty
+        }))
+        const payload = {
+            addressId: selectedAddress._id,
+            totalAmount: totalAmount,
+            items,
+            paymentStatus: 'pending',
+            paymentType:'cod'
+        };
+        console.log(payload)
+        dispatch(addOrder(payload))
+        setOrderConform(true)
+
+        
+    }
 
     useEffect(() => {
         auth.authenticate && dispatch(getAddress())
@@ -123,6 +155,11 @@ const CheckOut = () => {
         setAddress(address)
     }, [user.address])
 
+    if (orderConform) {
+        return (
+            <h1>Thank You</h1>
+        )
+    }
 
     return (
         <section className="ec-page-content section-space-p checkout_page">
@@ -222,16 +259,37 @@ const CheckOut = () => {
                                     title={'Order Summary '}
                                     active={orderSummary}
                                     body={
-                                        orderSummary ? <CartPage cartItemsOnly={true} />  : ''
+                                        orderSummary ? (<CartPage cartItemsOnly={true} />) : orderConformation ? (<div>{Object.keys(cart.cartItems).length} Items</div>) : null
                                     } />
 
+                                {orderSummary && (
+                                    <div className='checkout_page_cart'>
+                                        <p>Order conformation email will be send to riz@webscript.info</p>
+                                        <button onClick={userorderConformation} className='btn btn-primary'>Continue</button>
+                                    </div>
+                                )}
 
+                                <CheckoutStape
+                                    stapNumber={'4'}
+                                    title={'Payment Option'}
+                                    active={paymentOption}
+                                    body={paymentOption && (
+                                        <div>
+                                            <span style={{ marginTop: '20px' }}>
+                                                <input type="radio" id="bill2" name="radio-group" checked />
+                                                <label for="bill2">Cash on Delevery</label>
+                                            </span>
+
+                                            <NavLink to={'/account/orders'} className='btn btn-primary' onClick={onConformOrder}>CONFORM ORDER</NavLink>
+                                        </div>
+                                    )}
+                                />
 
                             </div>
                         </div>
 
                     </div>
-                
+
                     <div className='ec-checkout-rightside col-lg-4 col-md-12'>
                         <div className='ec-sidebar-wrap'>
                             <div className="ec-sidebar-block">
@@ -241,8 +299,11 @@ const CheckOut = () => {
                                 <div className='ec-sb-block-content ec-sidebar-dropdown'>
                                     <div class="ec-checkout-summary">
                                         <div>
-                                            <span class="text-left">Sub-Total</span>
-                                            <span class="text-right">$80.00</span>
+                                            <span class="text-left">Sub-Total ( {Object.keys(cart.cartItems).length} Items )</span>
+                                            <span class="text-right"> Qty : {Object.keys(cart.cartItems).reduce(function (totalPrice, key) {
+                                                const qty = cart.cartItems[key].qty;
+                                                return qty;
+                                            }, 0)}0</span>
                                         </div>
 
 

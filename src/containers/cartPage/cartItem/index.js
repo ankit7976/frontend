@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { removeCartItem } from '../../../actions/cart.action';
 import { genratefileName } from '../../../urlConfig';
 
 const CartItem = (props) => {
 const {_id,name,price,img} = props.cartItem;
 
 const [qty,setQty] = useState(props.cartItem.qty)
+const dispatch = useDispatch()
 const onQtyIncrement = ()=>{
 
     setQty(qty + 1)
@@ -17,10 +20,15 @@ const onQtyDescrement = ()=>{
     props.QtyDescrement(_id,qty -1)
 }
 
+const deletecartItem = (productId)=>{
+    const payload = {productId}
+    dispatch(removeCartItem(payload))
+}
+
   return (
     <tr  >
     <td data-label="Product" className="ec-cart-pro-name"><a
-        href="product-left-sidebar.html"><img className="ec-cart-pro-img mr-4"
+        href="#"><img className="ec-cart-pro-img mr-4"
             src={genratefileName(img)}
             alt="" />{name}</a></td>
     <td data-label="Price" className="ec-cart-pro-price"><span
@@ -36,7 +44,7 @@ const onQtyDescrement = ()=>{
     </td>
     <td data-label="Total" className="ec-cart-pro-subtotal">₹ {price}</td>
     <td data-label="Remove" className="ec-cart-pro-remove">
-        <a href="#"><i className="ecicon eci-trash-o"></i></a>
+        <a  onClick={()=>deletecartItem(_id)}><i className="ecicon eci-trash-o"></i></a>
     </td>
 </tr>
 

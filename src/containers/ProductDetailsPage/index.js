@@ -5,14 +5,14 @@ import { getProductDetailsById } from '../../actions';
 import { addToCart } from '../../actions/cart.action';
 import Layout from '../../components/Layout'
 import { genratefileName } from '../../urlConfig';
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const ProductDetailsPage = (props) => {
     const product = useSelector(state => state.product)
     const dispatch = useDispatch();
     const { productId } = useParams();
-    let navigate  = useNavigate();
+    let navigate = useNavigate();
     useEffect(() => {
         console.log(productId)
         const payload = {
@@ -29,8 +29,8 @@ const ProductDetailsPage = (props) => {
 
 
     return (
+         
 
-       
             <section className="ec-page-content section-space-p">
                 <div className="container">
                     <div className="row">
@@ -305,7 +305,9 @@ const ProductDetailsPage = (props) => {
                     </div>
                 </div>
             </section>
-       
+
+      
+
     )
 }
 

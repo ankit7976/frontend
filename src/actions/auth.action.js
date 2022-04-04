@@ -20,6 +20,7 @@ export const login = (user)=>{
                 token,user
             }
         })
+        return true;
        }else{
         dispatch({
             type:authConstants.LOGIN_FAILURE,
@@ -84,5 +85,27 @@ export const signout = () => {
     // }
 
 
+    }
+}
+
+
+
+
+export const Signup = (user)=>{
+    console.log(user)
+    return async (dispatch) =>{
+        dispatch({type:authConstants.LOGIN_REQUEST})
+       const res = await axios.post('signup', user)
+
+       if(res.status === 201){
+        const {user} = res.data;
+        console.log(user)
+        return true;
+       
+       }else{
+        const {error} = res.data;
+        console.log(error)
+       }
+      
     }
 }
