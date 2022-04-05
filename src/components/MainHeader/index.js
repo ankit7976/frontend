@@ -14,7 +14,9 @@ const Header = () => {
     const [show, setShow] = useState(false);
     const [signup, setSignup] = useState(false)
     const auth = useSelector(state => state.auth)
- 
+    const cart = useSelector(state => state.cart)
+    const user = useSelector(state => state.user)
+    
  
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -231,13 +233,13 @@ const Header = () => {
                                     <NavLink to={"account/orders"} className="ec-header-btn ec-header-wishlist">
                                         <div className="header-icon"><img src="assets/images/icons/wishlist.svg"
                                             className="svg_img header_svg" alt="" /></div>
-                                        {/* <span className="ec-header-count">4</span> */}
+                                      <span className="ec-header-count">{user.orders.length}</span> 
                                     </NavLink>
 
                                     <NavLink to={"/cart"} className="ec-header-btn ec-side-toggle">
                                         <div className="header-icon"><img src="assets/images/icons/cart.svg"
                                             className="svg_img header_svg" alt="" /></div>
-                                      
+                                       <span className="ec-header-count">{Object.keys(cart.cartItems).length}</span> 
                                     </NavLink>
 
                                 </div>
