@@ -264,7 +264,7 @@ const CheckOut = () => {
 
                                 {orderSummary && (
                                     <div className='checkout_page_cart'>
-                                        <p>Order conformation email will be send to riz@webscript.info</p>
+                                        <p>Order conformation email will be send to {auth.user.email}</p>
                                         <button onClick={userorderConformation} className='btn btn-primary'>Continue</button>
                                     </div>
                                 )}
